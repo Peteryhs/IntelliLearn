@@ -1,58 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Interface</title>
+    <title>IntelliLearn</title>
     <style>
+        @font-face {
+            font-family: Afacad;
+            src: url(Afacad-VariableFont_wght.ttf);
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: Afacad, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 2%;
+            height: 100vh;
+            margin: 0;
+            background-color: #242424;
+            font-size: 1.25em;
         }
-        #chat-container {
-            height: 300px;
-            overflow-y: scroll;
-            border: 1px solid #ccc;
+
+        .chat-container {
+            width: 90%;
+            height: 70%;
+            border: 0px solid #ccc;
+            border-radius: 20px;
+            background-color: rgb(128, 128, 128);
+        }
+
+        .chat-header {
+            padding: 15px 20px;
+            background-color: #3a1ddb;
+            color: white;
+            text-align: center;
+            border-radius: 20px;
+            font-size: 1.5em;
+        }
+
+        .messages {
+            display: flex;
+            flex-direction: column;
             padding: 10px;
+            height: 70%;
+            overflow-y: auto;
+            font-size: 1.25em;
         }
-        #user-input {
-            margin-top: 10px;
+
+        .message {
+            padding: 8px;
+            margin-bottom: 10px;
+            max-width: 70%;
+            background-color: #e1e3e6;
+            border-radius: 5px;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .chat-input {
+            padding-top: 5%;
+            padding-bottom: 5%;
+            height: 10%;
+            display: flex;
+        }
+
+        .input-field {
+            flex-grow: 1;
+            padding: 5px;
+            background-color: rgb(128, 128, 128);
+            border: 0px solid #ccc;
+            border-radius: 20px;
+            color: white;
+            outline: none;
+            font-family: Afacad, sans-serif;
+            font-size: 1.25em;
+        }
+
+        .send-button {
+            padding: 5px 10px;
+            background-color: #00b7ff;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-family: Afacad, sans-serif;
+            font-size: 1.25em;
+        }
+
+        ::placeholder {
+            color: lightgray;
+            font-family: Afacad, sans-serif;
+            font-size: 1.25em;
         }
     </style>
 </head>
+
 <body>
-    <div id="chat-container"></div>
-    <div id="user-input">
-        <input type="text" id="user-message" placeholder="Type your message...">
-        <button onclick="sendMessage()">Send</button>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>IntelliLearn</h2>
+        </div>
+        <div class="messages">
+            <!-- Add messages dynamically using JavaScript -->
+        </div>
+        <div class="chat-input">
+            <input type="text" class="input-field" placeholder="Type your message...">
+            <button id="send" class="send-button">Send</button>
+        </div>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-        function sendMessage() {
-            var userMessage = document.getElementById('user-message').value;
-            document.getElementById('user-message').value = '';
+        document.addEventListener('DOMContentLoaded', function () {
+            // Function to create a user message element
+            function createUserMessage(message) {
+                let messageElement = document.createElement('div');
+                messageElement.classList.add('message', 'user-message');
+                messageElement.textContent = message;
+                return messageElement;
+            }
 
-            fetch('/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ 'message': userMessage }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                displayMessage(userMessage, 'User');
-                displayMessage(data.response, 'Assistant');
+            // Function to create a chatbot message element
+            function createChatbotMessage(message) {
+                let messageElement = document.createElement('div');
+                messageElement.classList.add('message');
+                messageElement.innerHTML = message;
+                return messageElement;
+            }
+
+            // Click send button with Enter key
+            let send = document.getElementById('send');
+            document.addEventListener('keypress', function (event) {
+                let keyCode = event.keyCode ? event.keyCode : event.which;
+                if (keyCode === 13) {
+                    send.click();
+                }
             });
-        }
 
-        function displayMessage(message, role) {
-            var chatContainer = document.getElementById('chat-container');
-            var messageDiv = document.createElement('div');
-            messageDiv.innerHTML = '<strong>' + role + ':</strong> ' + message;
-            chatContainer.appendChild(messageDiv);
-        }
+            // Add functionality to send messages and display responses
+            document.querySelector('.send-button').addEventListener('click', function () {
+                let inputField = document.querySelector('.input-field');
+                let userMessage = inputField.value.trim();
+                if (userMessage) {
+                    // Display user message
+                    let userMessageElement = createUserMessage(userMessage);
+                    document.querySelector('.messages').appendChild(userMessageElement);
+                    inputField.value = '';
+
+                    // Send user message to the server
+                    fetch('/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ 'message': userMessage }),
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Display chatbot response
+                            let chatbotResponse = marked.parse(data.response);
+                            let chatbotMessageElement = createChatbotMessage(chatbotResponse);
+                            document.querySelector('.messages').appendChild(chatbotMessageElement);
+                        });
+                }
+            });
+        });
     </script>
 </body>
+
 </html>
