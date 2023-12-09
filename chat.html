@@ -120,12 +120,23 @@
             let userMessage = inputField.value.trim();
             if (userMessage) {
                 let messageElement = document.createElement('div');
+                let chatbotResponse;
                 messageElement.classList.add('message', 'user-message');
                 messageElement.textContent = userMessage;
                 document.querySelector('.messages').appendChild(messageElement);
                 inputField.value = '';
                 setTimeout(function() {
-                    let chatbotResponse = marked.parse('Hello! \n\n **How** can I help you today?'); // Replace with actual chatbot response
+                    fetch('/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ 'message': userMessage }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        chatbotResponse = marked.parse('Hello! \n\n **How** can I help you today?');
+                    });
                     let chatbotMessage = document.createElement('div');
                     chatbotMessage.classList.add('message');
                     chatbotMessage.innerHTML = chatbotResponse;
