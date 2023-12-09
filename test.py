@@ -48,7 +48,7 @@ def get_last_response(thread_id):
 
 @app.route('/')
 def home():
-    return render_template('chat.html')
+    return render_template('test.html')
 
 @app.route('/chat', methods=['POST'])
 def chat():
