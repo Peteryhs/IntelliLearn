@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template
 import openai, os
+from openai import OpenAI
 from dotenv import load_dotenv
 
 app = Flask(__name__)
@@ -7,13 +8,9 @@ app = Flask(__name__)
 # Set your OpenAI API key
 load_dotenv()
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-client = openai.Client(OPENAI_API_KEY)
+client = OpenAI()
 
-
-assistant = client.beta.assistants.create(
-    name=""
-
-)
+assistant = client.beta.assistants.retrieve("asst_nddeCyW1ur0LWOiLyV8C7XXv")
 
 @app.route('/')
 def home():
@@ -24,7 +21,7 @@ def get_response():
     user_input = request.form['user_input']
 
     # Call the OpenAI API to get a response
-    response = openai.Ccreate(
+    response = openai.Create(
         engine="gpt3.5",
         prompt=user_input,
         max_tokens=150  # Adjust as needed
