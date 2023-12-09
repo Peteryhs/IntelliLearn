@@ -94,6 +94,12 @@
             font-size: 1.25em;
         }
 
+        .typing-indicator {
+            margin-top: 10px;
+            font-style: italic;
+            color: #999;
+        }
+
         ::placeholder {
             color: lightgray;
             font-family: Afacad, sans-serif;
@@ -110,6 +116,7 @@
         <div class="messages">
             <!-- Add messages dynamically using JavaScript -->
         </div>
+        <div class="typing-indicator" id="typing-indicator"></div>
         <div class="chat-input">
             <input type="text" class="input-field" placeholder="Type your message...">
             <button id="send" class="send-button">Send</button>
@@ -118,6 +125,9 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            let typingIndicator = document.getElementById('typing-indicator');
+            let messagesContainer = document.querySelector('.messages');
+    
             // Function to create a user message element
             function createUserMessage(message) {
                 let messageElement = document.createElement('div');
@@ -125,7 +135,7 @@
                 messageElement.textContent = message;
                 return messageElement;
             }
-
+    
             // Function to create a chatbot message element
             function createChatbotMessage(message) {
                 let messageElement = document.createElement('div');
@@ -133,7 +143,22 @@
                 messageElement.innerHTML = message;
                 return messageElement;
             }
-
+    
+            // Function to show typing indicator
+            function showTypingIndicator() {
+                typingIndicator.textContent = 'IntelliLearn is typing...';
+            }
+    
+            // Function to hide typing indicator
+            function hideTypingIndicator() {
+                typingIndicator.textContent = '';
+            }
+    
+            // Function to scroll to the bottom of the messages
+            function scrollToBottom() {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+    
             // Click send button with Enter key
             let send = document.getElementById('send');
             document.addEventListener('keypress', function (event) {
@@ -142,7 +167,7 @@
                     send.click();
                 }
             });
-
+    
             // Add functionality to send messages and display responses
             document.querySelector('.send-button').addEventListener('click', function () {
                 let inputField = document.querySelector('.input-field');
@@ -150,9 +175,12 @@
                 if (userMessage) {
                     // Display user message
                     let userMessageElement = createUserMessage(userMessage);
-                    document.querySelector('.messages').appendChild(userMessageElement);
+                    messagesContainer.appendChild(userMessageElement);
                     inputField.value = '';
-
+    
+                    // Show typing indicator
+                    showTypingIndicator();
+    
                     // Send user message to the server
                     fetch('/chat', {
                         method: 'POST',
@@ -163,15 +191,22 @@
                     })
                         .then(response => response.json())
                         .then(data => {
+                            // Hide typing indicator
+                            hideTypingIndicator();
+    
                             // Display chatbot response
                             let chatbotResponse = marked.parse(data.response);
                             let chatbotMessageElement = createChatbotMessage(chatbotResponse);
-                            document.querySelector('.messages').appendChild(chatbotMessageElement);
+                            messagesContainer.appendChild(chatbotMessageElement);
+    
+                            // Scroll to the bottom after adding a new message
+                            scrollToBottom();
                         });
                 }
             });
         });
     </script>
+    
 </body>
 
 </html>
