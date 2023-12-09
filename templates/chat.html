@@ -125,24 +125,22 @@
                 messageElement.textContent = userMessage;
                 document.querySelector('.messages').appendChild(messageElement);
                 inputField.value = '';
-                setTimeout(function() {
-                    fetch('/chat', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ 'message': userMessage }),
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        chatbotResponse = data.response;
-                    });
-                    let chatbotMessage = document.createElement('div');
-                    chatbotMessage.classList.add('message');
-                    chatbotMessage.innerHTML = chatbotResponse;
-                    document.querySelector('.messages').appendChild(chatbotMessage);
-                }, 1000);
-            }
+                fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 'message': userMessage }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    chatbotResponse = data.response;
+                });
+                let chatbotMessage = document.createElement('div');
+                chatbotMessage.classList.add('message');
+                chatbotMessage.innerHTML = marked.parse(chatbotResponse);
+                document.querySelector('.messages').appendChild(chatbotMessage);
+            };
         });
     </script>
 </body>
