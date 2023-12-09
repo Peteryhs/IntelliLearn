@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #chat-container {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        #user-input {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container"></div>
+    <div id="user-input">
+        <input type="text" id="user-message" placeholder="Type your message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        function sendMessage() {
+            var userMessage = document.getElementById('user-message').value;
+            document.getElementById('user-message').value = '';
+
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 'message': userMessage }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                displayMessage(userMessage, 'User');
+                displayMessage(data.response, 'Assistant');
+            });
+        }
+
+        function displayMessage(message, role) {
+            var chatContainer = document.getElementById('chat-container');
+            var messageDiv = document.createElement('div');
+            messageDiv.innerHTML = '<strong>' + role + ':</strong> ' + message;
+            chatContainer.appendChild(messageDiv);
+        }
+    </script>
+</body>
+</html>
