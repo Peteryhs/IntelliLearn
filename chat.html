@@ -3,127 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot</title>
+    <title>IntelliLearn</title>
     <style>
+        @font-face {
+            font-family: Afacad;
+            src: url(Afacad-VariableFont_wght.ttf);
+        }
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: Afacad, sans-serif;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
+            padding-top: 2%;
             height: 100vh;
             margin: 0;
+            background-color: #242424;
+            font-size: 1.25em;
         }
-
-        .container {
-            width: 300px;
-            height: 400px;
-            margin: 0 auto;
-            border: 1px solid #ddd;
-            background-color: white;
+        .chat-container {
+            width: 90%;
+            height: 70%;
+            border: 0px solid #ccc;
+            border-radius: 20px;
+            background-color: rgb(128, 128, 128);
+        }
+        .chat-header {
+            padding: 15px 20px;
+            background-color: #3a1ddb;
+            color: white;
+            text-align: center;
+            border-radius: 20px;
+            font-size: 1.5em;
+        }
+        .messages {
             display: flex;
             flex-direction: column;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px;
-        }
-
-        .input-container {
-            display: flex;
-            margin: 15px;
-        }
-
-        .input-container input {
-            flex: 1;
             padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            outline: none;
+            height: 70%;
+            overflow-y: auto;
+            font-size: 1.25em;
         }
-
-        .input-container button {
-            padding: 10px 20px;
-            margin-left: 5px;
+        .message {
+            padding: 8px;
+            margin-bottom: 10px;
+            max-width: 70%;
+            background-color: #e1e3e6;
+            border-radius: 5px;
+        }
+        .user-message {
+            align-self: flex-end;
             background-color: #4CAF50;
+            color: white;
+        }
+        .chat-input {
+            padding-top: 5%;
+            padding-bottom: 5%;
+            height: 10%;
+            display: flex;
+        }
+        .input-field {
+            flex-grow: 1;
+            padding: 5px;
+            background-color: rgb(128, 128, 128);
+            border: 0px solid #ccc;
+            border-radius: 20px;
+            color: white;
+            outline: none;
+            font-family: Afacad, sans-serif;
+            font-size: 1.25em;
+        }
+        .send-button {
+            padding: 5px 10px;
+            background-color: #00b7ff;
             color: white;
             border: none;
+            border-radius: 20px;
             cursor: pointer;
-            border-radius: 5px;
+            margin-left: 10px;
+            font-family: Afacad, sans-serif;
+            font-size: 1.25em;
         }
-
-        .user-message {
-            background-color: #e0e0e0;
-            color: #666;
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            align-self: flex-end;
-            max-width: 80%;
-            word-wrap: break-word;
-        }
-
-        .bot-message {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            align-self: flex-start;
-            max-width: 80%;
-            word-wrap: break-word;
+        ::placeholder {
+            color: lightgray;
+            font-family: Afacad, sans-serif;
+            font-size: 1.25em;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="messages" id="messages">
-            <!-- Chat messages will be displayed here -->
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>IntelliLearn</h2>
         </div>
-        <div class="input-container">
-            <input type="text" id="userInput" placeholder="Type your message...">
-            <button onclick="sendMessage()">Send</button>
+        <div class="messages">
+            <!-- Add messages dynamically using JavaScript -->
+        </div>
+        <div class="chat-input">
+            <input type="text" class="input-field" placeholder="Type your message...">
+            <button id="send" class="send-button">Send</button>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-        const messages = document.getElementById('messages');
-        const userInput = document.getElementById('userInput');
+        // Click send button with Enter key
+        let send = document.getElementById('send');
+        document.addEventListener('keypress', (event)=>{
+            let keyCode = event.keyCode ? event.keyCode : event.which;
+            if(keyCode === 13) {
+                send.click();
+            }
+        })
 
-        function appendMessage(message, type) {
-            const messageElement = document.createElement('div');
-            messageElement.classList.add(type);
-            messageElement.textContent = message;
-            messages.appendChild(messageElement);
-            messages.scrollTop = messages.scrollHeight;
-        }
-
-        function sendMessage() {
-            const message = userInput.value;
-            userInput.value = '';
-            appendMessage(message, 'user-message');
-
-            // Send message to AI bot
-            fetch('https://your-api-url/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ message: message }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Display AI bot's response
-                appendMessage(data.response, 'bot-message');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                appendMessage('An error occurred. Please try again.', 'bot-message');
-            });
-        }
+        // Add functionality to send messages and display responses
+        document.querySelector('.send-button').addEventListener('click', function() {
+            let inputField = document.querySelector('.input-field');
+            let userMessage = inputField.value.trim();
+            if (userMessage) {
+                let messageElement = document.createElement('div');
+                messageElement.classList.add('message', 'user-message');
+                messageElement.textContent = userMessage;
+                document.querySelector('.messages').appendChild(messageElement);
+                inputField.value = '';
+                setTimeout(function() {
+                    let chatbotResponse = marked.parse('Hello! \n\n **How** can I help you today?'); // Replace with actual chatbot response
+                    let chatbotMessage = document.createElement('div');
+                    chatbotMessage.classList.add('message');
+                    chatbotMessage.innerHTML = chatbotResponse;
+                    document.querySelector('.messages').appendChild(chatbotMessage);
+                }, 1000);
+            }
+        });
     </script>
 </body>
 </html>
+
