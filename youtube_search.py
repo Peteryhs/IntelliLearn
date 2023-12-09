@@ -15,6 +15,5 @@ def search_youtube(keyword):
     except Exception as e:
         print(f"An error occurred: {e}")
 
-# Example usage
 search_keyword = input("Enter the keyword to search on YouTube: ")
 search_youtube(search_keyword)
