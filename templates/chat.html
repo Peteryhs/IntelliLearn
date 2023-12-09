@@ -135,7 +135,7 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        chatbotResponse = marked.parse('Hello! \n\n **How** can I help you today?');
+                        chatbotResponse = data.response;
                     });
                     let chatbotMessage = document.createElement('div');
                     chatbotMessage.classList.add('message');
