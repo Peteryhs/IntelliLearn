@@ -9,6 +9,6 @@ IntelliLearn is an AI Assistant designed to help students study with provided re
 ## License
 Feel free to copy and modify this project to your liking. No credit is required but it would be appreciated.
 
-##Information 
+## Information 
 Pitch slideshow: https://link.horizon.pics/IntelliLearn/‌‌‍⁠⁠‍⁠⁠
 Placed best pitch 
