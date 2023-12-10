@@ -4,8 +4,8 @@ IntelliLearn is your ultimate personal learning ally, seamlessly blending Artifi
 <img src="https://github.com/Peteryhs11/IntelliLearn/assets/119895317/e976319e-6bb2-4958-8874-9528b4a7a6e9" height="100" width="100"/>
 
 ## Information 
-- This was made for Hack the Ridge 2023, an annual hackathon hosted at Iroquois Ridge High School in Oakville, Ontario.\
-- We ended up being awarded $50 for having the best pitch!\
+- This was made for Hack the Ridge 2023, an annual hackathon hosted at Iroquois Ridge High School in Oakville, Ontario.
+- We ended up being awarded $50 for having the best pitch!
 - Here's the link to our Pitch Slideshow: https://bit.ly/46RBlTM
 
 ## Dependencies
