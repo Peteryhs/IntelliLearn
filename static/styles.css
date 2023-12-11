@@ -142,7 +142,8 @@ input:checked + .slider:before {
     display: flex;
     flex-direction: column;
     padding: 10px;
-    height: 70%;
+    min-height: 100px; /* Set the minimum height */
+    max-height: 325px; /* Set the maximum height */
     overflow-y: auto;
     font-size: 1.25em;
 }
