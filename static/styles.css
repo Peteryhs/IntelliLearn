@@ -13,6 +13,29 @@ body {
     color: #333; /* Default text color */
 }
 
+.emoji {
+    margin-left: 5px; /* Adjust spacing as needed */
+    font-size: 1.2em; /* Adjust size as needed */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo-text-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.logo {
+    max-width: 50px; /* Adjust the maximum width as needed */
+    margin-right: 10px; /* Add some spacing between the logo and text */
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -76,6 +99,10 @@ body.dark-mode {
 .chat-container.dark-mode {
     background-color: #555;
     box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode-transition {
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .chat-header.dark-mode {

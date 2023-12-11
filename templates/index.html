@@ -16,7 +16,10 @@
     <div class="container">
         <div class="chat-container" id="chat-container">
             <div class="chat-header">
-                <h2>IntelliLearn</h2>
+                <div class="logo-text-container">
+                    <img class="logo" src="/static/logo.png" alt="IntelliLearn Logo">
+                    <h2>IntelliLearn</h2>
+                </div>
             </div>
             <div class="messages">
                 <!-- Messages will be added dynamically using JavaScript -->
@@ -30,8 +33,12 @@
         <div class="toggle-container">
             <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" id="mode-toggle">
-                <label class="form-check-label" for="mode-toggle">Dark Mode</label>
+                <label class="form-check-label" for="mode-toggle">
+                    ☀️ Light Mode
+                    <span class="emoji" id="dark-mode-emoji">🌙</span> Dark Mode
+                </label>
             </div>
+        </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>

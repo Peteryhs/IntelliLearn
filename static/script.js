@@ -97,6 +97,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     modeToggle.addEventListener('change', function () {
-        body.classList.toggle('dark-mode', modeToggle.checked);
+        const isDarkMode = modeToggle.checked;
+        body.classList.toggle('dark-mode', isDarkMode);
+
+        // Add a class to the body for a smooth transition effect
+        if (isDarkMode) {
+            body.classList.add('dark-mode-transition');
+        } else {
+            body.classList.remove('dark-mode-transition');
+        }
     });
 });
