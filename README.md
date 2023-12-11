@@ -33,7 +33,10 @@ Open your preferred web browser and navigate to this address: http://127.0.0.1:5
 
 ### 6. Happy learning!
 
+## Gallery
+**Dark Mode**
 
+**Light Mode**
 ## License
 This code is licensed under the MIT License. Feel free to use this code, but make sure to credit this repository and the creators (Aiden Pinto, Peter Shao, and Kevin Rjeousski).
 
