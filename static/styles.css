@@ -41,8 +41,10 @@ body {
 }
 
 .messages {
+    display: flex;
+    flex-direction: column;
     padding: 10px;
-    max-height: 50vh;
+    height: 70%;
     overflow-y: auto;
     font-size: 1.25em;
 }
@@ -53,13 +55,14 @@ body {
     padding: 8px;
     margin-bottom: 10px;
     max-width: 70%;
-    border-radius: 10px;
-    transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
-    color: #333; /* Default text color */
+    background-color: #e1e3e6;
+    border-radius: 5px;
 }
 
 .user-message {
     align-self: flex-end;
+    background-color: #4CAF50;
+    color: white;
 }
 
 /* Dark Mode Styles */
