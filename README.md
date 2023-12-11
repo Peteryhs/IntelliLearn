@@ -11,6 +11,7 @@ IntelliLearn is your ultimate personal learning ally, seamlessly blending Artifi
 ## Dependencies
 - Python 3.12 or higher
 - A valid OpenAI API Key
+- Tuned assistant AI
 
 ## Quick Start
 ### 1. Clone the repository
@@ -32,6 +33,13 @@ python3 app.py
 Open your preferred web browser and navigate to this address: http://127.0.0.1:5000
 
 ### 6. Happy learning!
+
+## Gallery
+**Dark mode**
+![Dark Mode](https://github.com/Peteryhs11/IntelliLearn/assets/87454888/9ecd3619-caad-48b9-8852-56554e06aa4f)
+
+**Light mode**
+![Light Mode](https://github.com/Peteryhs11/IntelliLearn/assets/87454888/e27436b4-22ba-4f06-bc69-ec12e3796c4e)
 
 
 ## License
