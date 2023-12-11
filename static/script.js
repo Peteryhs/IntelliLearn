@@ -100,6 +100,17 @@ document.addEventListener('DOMContentLoaded', function () {
         const isDarkMode = modeToggle.checked;
         body.classList.toggle('dark-mode', isDarkMode);
 
+        const lightModeEmoji = document.getElementById('light-mode-emoji');
+        const darkModeEmoji = document.getElementById('dark-mode-emoji');
+
+        if (isDarkMode) {
+            lightModeEmoji.style.opacity = 0;
+            darkModeEmoji.style.opacity = 1;
+        } else {
+            lightModeEmoji.style.opacity = 1;
+            darkModeEmoji.style.opacity = 0;
+        }
+
         // Add a class to the body for a smooth transition effect
         if (isDarkMode) {
             body.classList.add('dark-mode-transition');
