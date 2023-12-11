@@ -142,12 +142,12 @@ input:checked + .slider:before {
     display: flex;
     flex-direction: column;
     padding: 10px;
-    min-height: 100px; /* Set the minimum height */
-    max-height: 325px; /* Set the maximum height */
+    min-height: calc(100px + 10vw); /* Set the minimum height */
+    max-height: calc(325px + 10vw); /* Set the maximum height */
+    width: 100%; /* Set the width */
     overflow-y: auto;
     font-size: 1.25em;
 }
-
 /* Message Styles */
 
 .message {
@@ -238,4 +238,33 @@ body.dark-mode-transition {
 
 .typing-animation {
     animation: typingAnimation 1.5s infinite;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+ 
+::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 5px; /* Add this line to make the scrollbar thumb round */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+/* This is for Internet Explorer */
+body {
+    scrollbar-base-color: #888;
+    scrollbar-face-color: #555;
+}
+
+/* This is for Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
 }
