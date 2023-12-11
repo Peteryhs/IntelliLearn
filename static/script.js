@@ -1,61 +1,81 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let typingIndicator = document.getElementById('typing-indicator');
-    let messagesContainer = document.querySelector('.messages');
+    const typingIndicator = document.getElementById('typing-indicator');
+    const messagesContainer = document.querySelector('.messages');
+    const body = document.body;
+    const modeToggle = document.getElementById('mode-toggle');
+    const sendButton = document.querySelector('.send-button');
+    const inputField = document.querySelector('.input-field');
 
-    // Function to create a user message element
     function createUserMessage(message) {
-        let messageElement = document.createElement('div');
-        messageElement.classList.add('message', 'user-message');
-        messageElement.textContent = message;
+        const messageElement = createMessageElement(message, 'user-message');
         return messageElement;
     }
 
-    // Function to create a chatbot message element
     function createChatbotMessage(message) {
-        let messageElement = document.createElement('div');
-        messageElement.classList.add('message');
-        messageElement.innerHTML = message;
+        const messageElement = createMessageElement(message, 'message');
         return messageElement;
     }
 
-    // Function to show typing indicator
-    function showTypingIndicator() {
-        typingIndicator.textContent = 'IntelliLearn is typing...';
+    function createMessageElement(message, className, isUserMessage) {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add(className, isUserMessage ? 'user-message' : 'chatbot-message');
+
+        const bubbleElement = document.createElement('div');
+        bubbleElement.classList.add('message-bubble');
+
+        const innerMessageElement = document.createElement('div');
+        innerMessageElement.classList.add('message-content');
+        innerMessageElement.textContent = message;
+
+        bubbleElement.appendChild(innerMessageElement);
+        messageElement.appendChild(bubbleElement);
+
+        return messageElement;
     }
 
-    // Function to hide typing indicator
+    function showTypingIndicator() {
+        const typingTexts = [
+            'IntelliLearn is typing.',
+            'IntelliLearn is typing..',
+            'IntelliLearn is typing...',
+        ];
+
+        let currentIndex = 0;
+        typingIndicator.textContent = typingTexts[currentIndex];
+
+        const typingInterval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % typingTexts.length;
+            typingIndicator.textContent = typingTexts[currentIndex];
+        }, 500); // Adjust the interval as needed
+
+        typingIndicator.dataset.typingInterval = typingInterval;
+    }
+
     function hideTypingIndicator() {
         typingIndicator.textContent = '';
+        clearInterval(typingIndicator.dataset.typingInterval);
     }
 
-    // Function to scroll to the bottom of the messages
     function scrollToBottom() {
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
-    // Click send button with Enter key
-    let send = document.getElementById('send');
     document.addEventListener('keypress', function (event) {
-        let keyCode = event.keyCode ? event.keyCode : event.which;
+        const keyCode = event.keyCode ? event.keyCode : event.which;
         if (keyCode === 13) {
-            send.click();
+            sendButton.click();
         }
     });
 
-    // Add functionality to send messages and display responses
-    document.querySelector('.send-button').addEventListener('click', function () {
-        let inputField = document.querySelector('.input-field');
-        let userMessage = inputField.value.trim();
+    sendButton.addEventListener('click', function () {
+        const userMessage = inputField.value.trim();
         if (userMessage) {
-            // Display user message
-            let userMessageElement = createUserMessage(userMessage);
+            const userMessageElement = createMessageElement(userMessage, 'message', true);
             messagesContainer.appendChild(userMessageElement);
             inputField.value = '';
 
-            // Show typing indicator
             showTypingIndicator();
 
-            // Send user message to the server
             fetch('/chat', {
                 method: 'POST',
                 headers: {
@@ -65,17 +85,18 @@ document.addEventListener('DOMContentLoaded', function () {
             })
                 .then(response => response.json())
                 .then(data => {
-                    // Hide typing indicator
                     hideTypingIndicator();
 
-                    // Display chatbot response
-                    let chatbotResponse = marked.parse(data.response);
-                    let chatbotMessageElement = createChatbotMessage(chatbotResponse);
+                    const chatbotResponse = marked.parse(data.response);
+                    const chatbotMessageElement = createMessageElement(chatbotResponse, 'message', false);
                     messagesContainer.appendChild(chatbotMessageElement);
 
-                    // Scroll to the bottom after adding a new message
                     scrollToBottom();
                 });
         }
+    });
+
+    modeToggle.addEventListener('change', function () {
+        body.classList.toggle('dark-mode', modeToggle.checked);
     });
 });
