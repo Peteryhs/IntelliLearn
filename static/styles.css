@@ -120,7 +120,7 @@ input:checked + .slider:before {
 /* Chat Container Styles */
 
 .chat-container {
-    width: 80%;
+    width: 100%;
     margin-top: 5%;
     background-color: #ffffff;
     border-radius: 20px;
@@ -234,6 +234,7 @@ body.dark-mode-transition {
     margin-left: 10px;
     font-style: italic;
     color: #999;
+    opacity: 0.5;
 }
 
 .typing-animation {
