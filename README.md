@@ -1,5 +1,5 @@
 # IntelliLearn
-IntelliLearn is your ultimate personal learning ally, seamlessly blending Artificial Intelligence and Machine Learning. Crafted with precision and empowered by custom training using Ontario Curriculum resources, it redefines education. Unleashing the power of hundreds of meticulously curated pages ensures an unparalleled learning experience for all. Welcome to a new era of education, intelligently tailored to the Ontario Curriculum.
+IntelliLearn is your ultimate **personal** learning ally, seamlessly blending Artificial Intelligence and Machine Learning. Crafted with precision and empowered by custom training using **Ontario Curriculum** resources, it redefines education. Unleashing the power of hundreds of meticulously curated pages ensures an unparalleled learning experience for all. Welcome to a new era of education, intelligently tailored to the Ontario Curriculum.
 ## Logo
 <img src="https://github.com/Peteryhs11/IntelliLearn/assets/119895317/e976319e-6bb2-4958-8874-9528b4a7a6e9" height="99" width="100"/>
 
@@ -11,7 +11,7 @@ IntelliLearn is your ultimate personal learning ally, seamlessly blending Artifi
 ## Dependencies
 - Python 3.12 or higher
 - A valid OpenAI API Key
-
+- A trined assistant AI
 ## Quick Start
 ### 1. Clone the repository
 ```bash
