@@ -11,7 +11,7 @@ IntelliLearn is your ultimate personal learning ally, seamlessly blending Artifi
 ## Dependencies
 - Python 3.12 or higher
 - A valid OpenAI API Key
-
+- Trained Assistant AI
 ## Quick Start
 ### 1. Clone the repository
 ```bash
