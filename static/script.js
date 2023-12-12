@@ -1,3 +1,4 @@
+// Event listener for when the DOM is loaded
 document.addEventListener('DOMContentLoaded', function () {
     const typingIndicator = document.getElementById('typing-indicator');
     const messagesContainer = document.querySelector('.messages');
@@ -6,16 +7,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const sendButton = document.querySelector('.send-button');
     const inputField = document.querySelector('.input-field');
 
+    // Function to create a user message element
     function createUserMessage(message) {
         const messageElement = createMessageElement(message, 'user-message');
         return messageElement;
     }
 
+    // Function to create a chatbot message element
     function createChatbotMessage(message) {
         const messageElement = createMessageElement(message, 'message');
         return messageElement;
     }
 
+    // Function to create a message element
     function createMessageElement(message, className, isUserMessage) {
         const messageElement = document.createElement('div');
         messageElement.classList.add(className, isUserMessage ? 'user-message' : 'chatbot-message');
@@ -33,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return messageElement;
     }
 
+    // Function to show the typing indicator
     function showTypingIndicator() {
         const typingTexts = [
             'IntelliLearn is typing.',
@@ -51,15 +56,18 @@ document.addEventListener('DOMContentLoaded', function () {
         typingIndicator.dataset.typingInterval = typingInterval;
     }
 
+    // Function to hide the typing indicator
     function hideTypingIndicator() {
         typingIndicator.textContent = '';
         clearInterval(typingIndicator.dataset.typingInterval);
     }
 
+    // Function to scroll to the bottom of the messages container
     function scrollToBottom() {
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
+    // Event listener for keypress event
     document.addEventListener('keypress', function (event) {
         const keyCode = event.keyCode ? event.keyCode : event.which;
         if (keyCode === 13) {
@@ -67,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Event listener for send button click event
     sendButton.addEventListener('click', function () {
         const userMessage = inputField.value.trim();
         if (userMessage) {
@@ -76,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             showTypingIndicator();
 
+            // Send user message to the server
             fetch('/chat', {
                 method: 'POST',
                 headers: {
@@ -96,6 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Event listener for mode toggle change event
     modeToggle.addEventListener('change', function () {
         const isDarkMode = modeToggle.checked;
         body.classList.toggle('dark-mode', isDarkMode);
