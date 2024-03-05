@@ -73,6 +73,7 @@ body {
 
 input:checked + .slider {
     background-color: #007bff;
+    animation: toggleSwitch 0.3s ease-in-out; /* Added animation */
 }
 
 input:focus + .slider {
@@ -156,6 +157,7 @@ input:checked + .slider:before {
     max-width: 70%;
     background-color: #e1e3e6;
     border-radius: 5px;
+    animation: messageAppear 0.5s ease-in-out; /* Added animation */
 }
 
 .user-message {
@@ -227,6 +229,10 @@ body.dark-mode-transition {
     font-size: 1.25em;
 }
 
+.send-button:active { /* Added animation */
+    animation: buttonClick 0.2s ease-in-out;
+}
+
 /* Typing Animation Styles */
 
 .typing-indicator {
@@ -268,4 +274,29 @@ body {
 * {
     scrollbar-width: thin;
     scrollbar-color: #888 #f1f1f1;
+}
+
+/* Added Animations */
+
+@keyframes typingAnimation {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+
+@keyframes messageAppear {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes buttonClick {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
+
+@keyframes toggleSwitch {
+    0% { transform: scaleX(1); }
+    50% { transform: scaleX(1.1); }
+    100% { transform: scaleX(1); }
 }
